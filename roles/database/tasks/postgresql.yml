@@ -22,12 +22,15 @@
 - name: Restart PostgreSQL
   command: service postgresql restart
 
-- name: create the postgresql user for application
+- name: Enable start on reboot
+  command: update-rc.d postgresql defaults
+
+- name: Create the postgresql user for application
   postgresql_user: name=deploy
   sudo: yes
   sudo_user: postgres
 
-- name: create the postgresql database for application
+- name: Create the postgresql database for application
   postgresql_db: name=app_{{app_name}} owner=deploy state=present
   sudo: yes
   sudo_user: postgres
